@@ -39,7 +39,8 @@ if(session.getAttribute("login")!=null){
        
        </tr>
        <%
-       String url = "jdbc:mysql://localhost:3306/gestionabsence";
+       
+       String url = "jdbc:mysql://localhost:3306/gestionabsence?characterEncoding=utf8";
 		  String utilisateur = "root";
 		  String motDePasse = "";
 		  int number=0;

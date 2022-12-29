@@ -2,7 +2,7 @@ package web;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -25,7 +25,7 @@ public class Delete extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    Connection cnx= dbConnection.Cnx();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
@@ -34,27 +34,25 @@ public class Delete extends HttpServlet {
 			String user_id=request.getParameter("user_id");
 			
 			
-			  String url = "jdbc:mysql://localhost:3306/gestionabsence";
-			  String utilisateur = "root";
-			  String motDePasse = "";
+			  
 			  try {
-				  Class.forName("com.mysql.jdbc.Driver");
-				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-				  PreparedStatement pst = con.prepareStatement("delete from professeur where user_id = ?");
+				  
+				  
+				  PreparedStatement pst = cnx.prepareStatement("delete from professeur where user_id = ?");
 				  pst.setString(1, user_id);
 				  response.sendRedirect("index.jsp");
-				  pst = con.prepareStatement("select Max(id_user) from user");
+				  pst = cnx.prepareStatement("select Max(id_user) from user");
 				  ResultSet rs = pst.executeQuery();
 				  
 				  while(rs.next()) {
 
 					  
-					  pst = con.prepareStatement("delete from professeur where user_id=?");
+					  pst = cnx.prepareStatement("delete from professeur where user_id=?");
 					  pst.setString(1, user_id);
 					  pst.executeUpdate();
 					  response.sendRedirect("index.jsp");
 					  pst.close();
-					  con.close();
+					  cnx.close();
 				  }
 				  
 			  }catch (Exception e) {
