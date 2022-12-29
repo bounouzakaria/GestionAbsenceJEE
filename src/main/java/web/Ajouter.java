@@ -2,7 +2,7 @@ package web;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -27,7 +27,8 @@ public class Ajouter extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    Connection con = dbConnection.Cnx();
+    dbConnection con = new dbConnection();
+    Connection cnx = con.init();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
@@ -45,16 +46,16 @@ public class Ajouter extends HttpServlet {
 			  try {
 				  
 				  System.out.println(email + " " + pass);
-				  PreparedStatement pst = con.prepareStatement("insert into user(email_user, pass_user) values (?, ?)");
+				  PreparedStatement pst = cnx.prepareStatement("insert into user(email_user, pass_user) values (?, ?)");
 				  pst.setString(1, email);
 				  pst.setString(2, pass);
 				  pst.executeUpdate();
 				  
-				  pst = con.prepareStatement("select Max(id_user) from user");
+				  pst = cnx.prepareStatement("select Max(id_user) from user");
 				  ResultSet rs = pst.executeQuery();
 				  while(rs.next()) {
 					  user_id = rs.getInt(1);
-					  pst = con.prepareStatement("insert into professeur(nom_prof,prenom_prof,telephone_prof,user_id) values(?,?,?,?)");
+					  pst = cnx.prepareStatement("insert into professeur(nom_prof,prenom_prof,telephone_prof,user_id) values(?,?,?,?)");
 					  pst.setString(1, nom); 
 					  pst.setString(2, prenom);
 					  pst.setString(3, telephone); 
@@ -62,7 +63,7 @@ public class Ajouter extends HttpServlet {
 					  pst.executeUpdate();
 					  response.sendRedirect("index.jsp");
 					  pst.close();
-					  con.close();
+					  cnx.close();
 				  }
 				  
 			  }catch (Exception e) {

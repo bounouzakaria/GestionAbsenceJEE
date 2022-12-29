@@ -24,7 +24,8 @@ public class login extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    Connection con = dbConnection.Cnx();
+    dbConnection cnx = new dbConnection();
+    Connection con = cnx.init();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		String login=request.getParameter("login"); //1er argument

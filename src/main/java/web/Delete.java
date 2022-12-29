@@ -26,7 +26,8 @@ public class Delete extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-    Connection con = dbConnection.Cnx();
+    dbConnection cnx = new dbConnection();
+    Connection con = cnx.init();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
