@@ -26,19 +26,15 @@ public class Update extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-
+    Connection con = dbConnection.Cnx();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
-			  String url = "jdbc:mysql://localhost:3306/gestionabsence";
-			  String utilisateur = "root";
-			  String motDePasse = "";
+			  
 			  try {
 					String id = request.getParameter("id_prof");
 					int id_1 = 0;
 					String nom = null, prenom= null, email= null, tel= null, pass= null;
-				  Class.forName("com.mysql.jdbc.Driver");
-				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
 				PreparedStatement pst1 = con.prepareStatement("SELECT * FROM professeur where id_prof=?");
 				pst1.setInt(1, Integer.parseInt(id));
 				ResultSet rs = pst1.executeQuery();				
