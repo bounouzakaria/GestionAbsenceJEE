@@ -27,7 +27,7 @@ public class Ajouter extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    Connection con = dbConnection.Cnx();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
@@ -41,12 +41,9 @@ public class Ajouter extends HttpServlet {
 			
 			
 			
-			  String url = "jdbc:mysql://localhost:3306/gestionabsence";
-			  String utilisateur = "root";
-			  String motDePasse = "";
+			
 			  try {
-				  Class.forName("com.mysql.jdbc.Driver");
-				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
+				  
 				  System.out.println(email + " " + pass);
 				  PreparedStatement pst = con.prepareStatement("insert into user(email_user, pass_user) values (?, ?)");
 				  pst.setString(1, email);

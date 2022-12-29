@@ -26,7 +26,7 @@ public class Delete extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	
+    Connection con = dbConnection.Cnx();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
@@ -34,12 +34,9 @@ public class Delete extends HttpServlet {
 			String user_id=request.getParameter("user_id");
 			
 			
-			  String url = "jdbc:mysql://localhost:3306/gestionabsence";
-			  String utilisateur = "root";
-			  String motDePasse = "";
+			
 			  try {
-				  Class.forName("com.mysql.jdbc.Driver");
-				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
+				  
 				  PreparedStatement pst = con.prepareStatement("delete from professeur where user_id = ?");
 				  pst.setString(1, user_id);
 				  response.sendRedirect("index.jsp");
