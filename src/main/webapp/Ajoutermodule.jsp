@@ -9,6 +9,17 @@ if(session.getAttribute("login")!=null){
 }else{
 	response.sendRedirect("auth.jsp");
 			}
+
+
+String url = "jdbc:mysql://localhost:3306/gestionabsence";
+String utilisateur = "root";
+String motDePasse = "";
+int number=0;
+try {
+	  Class.forName("com.mysql.jdbc.Driver");
+	  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
+	  PreparedStatement pst = con.prepareStatement("select id_filliere, libelle_fil from filliere");
+	ResultSet rs=pst.executeQuery();
 %>
 <!DOCTYPE html>
 <html>
@@ -32,15 +43,38 @@ if(session.getAttribute("login")!=null){
 
 <tr>
        <td>Nom_Filiere</td>
-       <td><input type="text" name="filiere" required></td>
+       <td>
+       <select name="fil" id="id_fil">
+       <%
+  	 while(rs.next()){
+		%>
+		  <option value="<%= rs.getString(1)%>"><%= rs.getString(2)%></option>
+		<%
+  	 }
+       %>
+		</select>
+       </td>
 
 </tr>
 <tr>
        <td>Nom_Semestre</td>
-       <td><input type="text" name="semestre" required></td>
+       <td><select name="sem" id="id_sem">
+       <%
+       	pst = con.prepareStatement("select id_semestre, nom_semestre from semestre order by nom_semestre");
+   		rs = pst.executeQuery();
+  	 while(rs.next()){
+		%>
+		  <option value="<%= rs.getString(1)%>"><%= rs.getString(2)%></option>
+		<%
+  	 }
+}
+       catch(Exception e){
+    	   
+       }
+       %>
+		</select></td>
 
 </tr>
-
 <tr>
        <td>Envoyer</td>
        <td><input type="submit" value="Enregistrer" required></td>

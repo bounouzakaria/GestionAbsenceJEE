@@ -46,30 +46,28 @@ if(session.getAttribute("login")!=null){
 		  try {
 			  Class.forName("com.mysql.jdbc.Driver");
 			  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-			  PreparedStatement pst = con.prepareStatement("select * from module");
+			  PreparedStatement pst = con.prepareStatement("select * from module"); 
 			ResultSet rs=pst.executeQuery();
 			 while(rs.next()){
-				 PreparedStatement pst2 = con.prepareStatement("SELECT * from filliere where id_filliere=" + rs.getString(4));
+				 PreparedStatement pst2 = con.prepareStatement("SELECT libelle_fil from filliere where id_filliere= ?");
+				 pst2.setString(1,rs.getString(4));
+				 PreparedStatement pst3 = con.prepareStatement("SELECT nom_semestre from semestre where id_semestre= ?");
+				 pst3.setString(1, rs.getString(3));
 				 ResultSet rs1 = pst2.executeQuery();
-				 PreparedStatement pst3 = con.prepareStatement("SELECT * from semestre where id_semestre=" + rs.getString(3));
 				 ResultSet rs2 = pst3.executeQuery();
+				 while(rs1.next() && rs2.next()){
 				 %>
-	
-         <%
-         while(rs1.next() && rs2.next()){
-        	 %>
+		
 	<tr>
 		<td><%=rs.getString(1) %></td>
 		<td><%=rs.getString(2)%></td>
-		<td><%=rs1.getString(2)%></td> 
-		<td><%=rs2.getString(2)%></td> 
-		<td><a href="DeleteModule?id_semestre=<%=rs1.getString(1) %>">Supprimer</a></td>
-         <td><a href="UpdateModule?id_module=<%=rs2.getString(1) %>">modifier</a></td>
-   </tr>
-		<%      	 
-         } %>
-          	 
+		<td><%=rs1.getString(1)%></td> 
+		<td><%=rs2.getString(1)%></td> 
+		<td><a href="DeleteModule?id_module=<%=rs.getString(1) %>">Supprimer</a></td>
+         <td><a href="UpdateModule?id_module=<%=rs.getString(1) %>">modifier</a></td>
+   </tr>  	 
 		<%
+				 }
 			 }
 			pst = con.prepareStatement("select count(*) from module");
 			rs=pst.executeQuery();
