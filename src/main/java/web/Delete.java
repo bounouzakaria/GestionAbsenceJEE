@@ -2,7 +2,7 @@ package web;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -26,42 +26,24 @@ public class Delete extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-    dbConnection cnx = new dbConnection();
-    Connection con = cnx.init();
+    dbConnection con = new dbConnection();
+    Connection cnx = con.init();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
-			String id_prof=request.getParameter("id_prof");
-			String user_id=request.getParameter("user_id");
-			
-			
-			
+			String id_classe = request.getParameter("id_classe");		
 			  try {
-				  
-				  PreparedStatement pst = con.prepareStatement("delete from professeur where user_id = ?");
-				  pst.setString(1, user_id);
+				  PreparedStatement pst = cnx.prepareStatement("delete from classe where id_classe = ?");
+				  pst.setString(1, id_classe);
 				  response.sendRedirect("index.jsp");
-				  pst = con.prepareStatement("select Max(id_user) from user");
-				  ResultSet rs = pst.executeQuery();
-				  
-				  while(rs.next()) {
-
-					  
-					  pst = con.prepareStatement("delete from professeur where user_id=?");
-					  pst.setString(1, user_id);
-					  pst.executeUpdate();
-					  response.sendRedirect("index.jsp");
+				  int rs = pst.executeUpdate();
 					  pst.close();
-					  con.close();
-				  }
 				  
 			  }catch (Exception e) {
 				  System.out.print(e);
 				  
 			  }
-			
-			
-			
 		}else{
 			response.sendRedirect("auth.jsp");
 					}

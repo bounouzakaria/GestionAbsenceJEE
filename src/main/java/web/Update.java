@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,34 +33,19 @@ public class Update extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
-			 
 			  try {
-					String id = request.getParameter("id_prof");
-					int id_1 = 0;
-					String nom = null, prenom= null, email= null, tel= null, pass= null;
-				  
-				PreparedStatement pst1 = con.prepareStatement("SELECT * FROM professeur where id_prof=?");
+				String id = request.getParameter("id_classe");
+				String id_fil = request.getParameter("id_fil");
+			
+				String nom = null, nom_fil = null;
+				PreparedStatement pst1 = con.prepareStatement("SELECT * FROM classe where id_classe=?");
 				pst1.setInt(1, Integer.parseInt(id));
-				ResultSet rs = pst1.executeQuery();				
-				while(rs.next()) {
+					ResultSet rs = pst1.executeQuery();				
+					while(rs.next()) {
 					nom = rs.getString(2);
-					prenom = rs.getString(3);
-					tel = rs.getString(4);
-					id_1 = rs.getInt(5);
-					pst1 = con.prepareStatement("SELECT * FROM user where id_user=?");
-					pst1.setInt(1, id_1);
-					ResultSet rs1 = pst1.executeQuery();
-					while(rs1.next()) {
-						email = rs.getString(2);
-						pass = rs.getString(3);
-					}
 				}
-				request.setAttribute("id_1", id_1);
+				request.setAttribute("id_classe", id);
 				request.setAttribute("nom", nom);
-				request.setAttribute("prenom", prenom);
-				request.setAttribute("tel", tel);
-				request.setAttribute("email", email);
-				request.setAttribute("pass", email);
 				request.getRequestDispatcher("UpdatePage.jsp").forward(request, response);
 			  }catch (Exception e) {
 				  System.out.print(e);
@@ -73,34 +60,19 @@ public class Update extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-			String id = request.getParameter("user_id");
+
+			String id = request.getParameter("id_classe");
 			String nom=request.getParameter("nom");
-			String prenom=request.getParameter("prenom");
-			String mail=request.getParameter("email");
-			String password=request.getParameter("pass");
-			String telephone=request.getParameter("tel");
-
-		
-			
+			String filliere=request.getParameter("id_filliere");
 			  try {
-				  
-
-		  PreparedStatement pst = con.prepareStatement("UPDATE professeur SET nom_prof = ?, prenom_prof = ?, telephone_prof= ? where user_id = ?");
+		  PreparedStatement pst = con.prepareStatement("UPDATE classe SET nom_classe = ?, filliere_id = ? where id_classe= ?");
 		  pst.setString(1, nom); 
-		  pst.setString(2, prenom);
-		  pst.setString(3, telephone); 
-		  pst.setString(4, id);
-		  pst.executeUpdate();
-		  pst = con.prepareStatement("UPDATE user SET email_user = ?, pass_user = ? where id_user = ?");
-		  pst.setString(1, mail);
-		  pst.setString(2, password);
+		  pst.setString(2, filliere);
 		  pst.setString(3, id);
 		  pst.executeUpdate();
 		  response.sendRedirect("index.jsp");
 		  pst.close();
-		  con.close();
-			  }
+		  }
 			  catch(Exception e) {
 			  }
 		}

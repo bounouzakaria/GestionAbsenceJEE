@@ -2,7 +2,6 @@ package web;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -19,21 +18,20 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/login")
 public class login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  
     public login() {
         super();
         // TODO Auto-generated constructor stub
     }
+
     dbConnection cnx = new dbConnection();
     Connection con = cnx.init();
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		String login=request.getParameter("login"); //1er argument
 		String password=request.getParameter("pwd");//2nd argument
-		
-		 
-		  try {
-			  
+
+		try {	
 			  PreparedStatement pst = con.prepareStatement("select id_user from user where email_user=? and pass_user=?");
 			  pst.setString(1, login); 
 			  pst.setString(2, password);
@@ -41,12 +39,11 @@ public class login extends HttpServlet {
 			  ResultSet rs=pst.executeQuery();
 			  if(rs.next()) {
 				  session.setAttribute("login", login);
-				  response.sendRedirect("Index.jsp");
+				  response.sendRedirect("index.jsp");
 			  }else {
 				  response.sendRedirect("auth.jsp");
 			  }
 			  rs.close();
-			  con.close();
 			  pst.close();
 			  
 			  

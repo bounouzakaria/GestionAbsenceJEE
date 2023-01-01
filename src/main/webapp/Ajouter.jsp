@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="web.dbConnection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page language="java" %>
@@ -9,6 +12,15 @@ if(session.getAttribute("login")!=null){
 }else{
 	response.sendRedirect("auth.jsp");
 			}
+
+	dbConnection db = new dbConnection();
+	Connection cnx = db.init();
+	
+	List<String> rl = new ArrayList<String>();
+	
+	PreparedStatement pst = cnx.prepareStatement("select id_filliere, libelle_fil from filliere");
+	ResultSet rs = pst.executeQuery();
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -20,34 +32,25 @@ if(session.getAttribute("login")!=null){
 <div>
 <a href="Logout">Logout</a>
 </div>
-<h1>Ajouter Professeur</h1>
+<h1>Ajouter Classe</h1>
 <form method="POST" action="Ajouter" >
 <table border="1">
 <tr>
        <td>Nom</td>
-       <td><input type="text" name="nom" required></td>
+       <td><input type="text" name="nom_classe" required></td>
 
 </tr>
 <tr>
-       <td>Prenom</td>
-       <td><input type="text" name="prenom" required></td>
-
-</tr>
-
-<tr>
-       <td>Telephone</td>
-       <td><input type="text" name="telephone" required></td>
-
-</tr>
-<tr>
-       <td>email</td>
-       <td><input type="text" name="email" required></td>
-
-</tr>
-<tr>
-       <td>Mot de passe</td>
-       <td><input type="password" name="pwd" required></td>
-
+       <td>Filliere</td>
+       <td><select name="id_filliere">
+       <%
+       while(rs.next()){
+       %>
+       <option value="<%=rs.getString(1)%>"><%=rs.getString(2)%></option>
+       <%
+       }
+       %>
+       </select></td>
 </tr>
 <tr>
        <td>Envoyer</td>

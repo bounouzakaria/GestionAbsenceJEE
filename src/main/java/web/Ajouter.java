@@ -27,46 +27,27 @@ public class Ajouter extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+
     dbConnection con = new dbConnection();
     Connection cnx = con.init();
 	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
-			String nom=request.getParameter("nom");
-			String prenom=request.getParameter("prenom");
-			String telephone=request.getParameter("telephone");
-			String email = request.getParameter("email");
-			String pass = request.getParameter("pwd");
-			int user_id = 0;
-			
-			
-			
+			String nom_classe= request.getParameter("nom_classe");
+			String id_filliere=request.getParameter("id_filliere");
 			
 			  try {
-				  
-				  System.out.println(email + " " + pass);
-				  PreparedStatement pst = cnx.prepareStatement("insert into user(email_user, pass_user) values (?, ?)");
-				  pst.setString(1, email);
-				  pst.setString(2, pass);
-				  pst.executeUpdate();
-				  
-				  pst = cnx.prepareStatement("select Max(id_user) from user");
-				  ResultSet rs = pst.executeQuery();
-				  while(rs.next()) {
-					  user_id = rs.getInt(1);
-					  pst = cnx.prepareStatement("insert into professeur(nom_prof,prenom_prof,telephone_prof,user_id) values(?,?,?,?)");
-					  pst.setString(1, nom); 
-					  pst.setString(2, prenom);
-					  pst.setString(3, telephone); 
-					  pst.setInt(4, user_id);
+
+				  PreparedStatement pst = cnx.prepareStatement("insert into classe(nom_classe, filliere_id) values(?, ?)");
+					  pst.setString(1, nom_classe); 
+					  pst.setString(2, id_filliere);
 					  pst.executeUpdate();
 					  response.sendRedirect("index.jsp");
 					  pst.close();
-					  cnx.close();
-				  }
-				  
-			  }catch (Exception e) {
+			  	}
+			  catch (Exception e) {
 				  System.out.print(e);
 				  
 			  }
