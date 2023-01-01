@@ -21,17 +21,17 @@ if(session.getAttribute("login")!=null){
 </head>
 <body>
 <div>
-<p> Liste des professeurs</p>
+<p> Liste des Etudiants</p>
 <a href="Logout">Logout</a>
 </div>
-<h1>Liste des Professeurs</h1>
+<h1>Liste des Etudiants</h1>
 <table border="1" width="100%" >
        <tr> 
        
        <th> ID</th>
-        <th> Nom </th>
         <th>Prenom </th>
-         <th>Telephone</th>
+        <th>Nom </th>
+         <th>Classe</th>
          <th>Email</th>
          <th>Password</th>
            <th>Action</th>
@@ -46,18 +46,26 @@ if(session.getAttribute("login")!=null){
 		  try {
 			  Class.forName("com.mysql.jdbc.Driver");
 			  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-			  PreparedStatement pst = con.prepareStatement("select * from professeur");
+			  PreparedStatement pst = con.prepareStatement("select * from etudiant");
 			ResultSet rs=pst.executeQuery();
 			 while(rs.next()){
-				 PreparedStatement pst2 = con.prepareStatement("SELECT * from user where id_user=" + rs.getString(5));
+				 PreparedStatement pst2 = con.prepareStatement("SELECT * from user where email_user=?");
+				 pst2.setString(1, rs.getString(4));
 				 ResultSet rs1 = pst2.executeQuery();
 				 %>
 	<tr> 
 		<td><%=rs.getString(1)%></td>
+        <td><%=rs.getString(3)%></td>
         <td><%=rs.getString(2)%></td>
-        <td><%=rs.getString(3)%></t>
-         <td> <%=rs.getString(4)%></td>
+        <%
+        	pst = con.prepareStatement("select nom_classe from classe where id_classe=?");
+        	pst.setString(1, rs.getString(5));
+        	ResultSet rs3= pst.executeQuery();
+        	while (rs3.next()){
+        %>
+        <td><%=rs3.getString(1) %></td>
          <%
+        	}
          while(rs1.next()){
         	 %>
 		<td><%=rs1.getString(2)%></td>
@@ -66,13 +74,13 @@ if(session.getAttribute("login")!=null){
          }
          %>
          <!--  Voici l'erreur -->
-          <td> <a href="Delete?user_id=<%=rs.getString(5) %>&id_prof=<%= rs.getString(1)%>">Supprimer</a></td>
-          <td> <a href="Update?id_prof=<%=rs.getString(1) %>">modifier</a></td>
+          <td> <a href="Delete?email_user=<%=rs.getString(4)%>">Supprimer</a></td>
+          <td> <a href="Update?id_etud=<%=rs.getString(1)%>&email_user=<%=rs.getString(4)%>">modifier</a></td>
         		
     </tr>	        		 
 		<%
 			 }
-			pst = con.prepareStatement("select count(*) from professeur");
+			pst = con.prepareStatement("select count(*) from etudiant");
 			rs=pst.executeQuery();
 			rs.next();
 			
@@ -86,8 +94,8 @@ if(session.getAttribute("login")!=null){
 		  }
        %>
 </table>
-Nombre total de professeurs :<%=number %><br>
-<a href="Ajouter.jsp">Ajouter Professeur</a>
+Nombre total de classes :<%=number %><br>
+<a href="Ajouter.jsp">Ajouter Classe</a>
 
 
 </body>

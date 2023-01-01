@@ -1,3 +1,6 @@
+<%@page import="web.dbConnection"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page language="java" %>
@@ -9,6 +12,15 @@ if(session.getAttribute("login")!=null){
 }else{
 	response.sendRedirect("auth.jsp");
 			}
+
+
+
+	dbConnection db = new dbConnection();
+	Connection cnx = db.init();
+	
+	PreparedStatement pst = cnx.prepareStatement("select id_classe, nom_classe from classe");
+	ResultSet rs = pst.executeQuery();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +32,7 @@ if(session.getAttribute("login")!=null){
 <div>
 <a href="Logout">Logout</a>
 </div>
-<h1>Ajouter Professeur</h1>
+<h1>Ajouter Etudiant</h1>
 <form method="POST" action="Ajouter" >
 <table border="1">
 <tr>
@@ -35,11 +47,6 @@ if(session.getAttribute("login")!=null){
 </tr>
 
 <tr>
-       <td>Telephone</td>
-       <td><input type="text" name="telephone" required></td>
-
-</tr>
-<tr>
        <td>email</td>
        <td><input type="text" name="email" required></td>
 
@@ -48,6 +55,17 @@ if(session.getAttribute("login")!=null){
        <td>Mot de passe</td>
        <td><input type="password" name="pwd" required></td>
 
+</tr>
+<tr><td>Nom Classe</td>
+<td><select name="id_classe">
+       <%
+       while(rs.next()){
+       %>
+       <option value="<%=rs.getString(1)%>"><%=rs.getString(2)%></option>
+       <%
+       }
+       %>
+       </select></td>
 </tr>
 <tr>
        <td>Envoyer</td>

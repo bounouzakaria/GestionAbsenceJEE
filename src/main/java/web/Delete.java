@@ -30,8 +30,7 @@ public class Delete extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
-			String id_prof=request.getParameter("id_prof");
-			String user_id=request.getParameter("user_id");
+			String email_user=request.getParameter("email_user");
 			
 			
 			  String url = "jdbc:mysql://localhost:3306/gestionabsence";
@@ -40,23 +39,14 @@ public class Delete extends HttpServlet {
 			  try {
 				  Class.forName("com.mysql.jdbc.Driver");
 				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-				  PreparedStatement pst = con.prepareStatement("delete from professeur where user_id = ?");
-				  pst.setString(1, user_id);
-				  response.sendRedirect("index.jsp");
-				  pst = con.prepareStatement("select Max(id_user) from user");
-				  ResultSet rs = pst.executeQuery();
-				  
-				  while(rs.next()) {
-
-					  
-					  pst = con.prepareStatement("delete from professeur where user_id=?");
-					  pst.setString(1, user_id);
+				  PreparedStatement pst = con.prepareStatement("delete from user where email_user=?");
+				  pst.setString(1, email_user);
+				  pst.executeUpdate();
+					  pst = con.prepareStatement("delete from etudiant where email_etud=?");
+					  pst.setString(1, email_user);
 					  pst.executeUpdate();
 					  response.sendRedirect("index.jsp");
-					  pst.close();
-					  con.close();
-				  }
-				  
+					  pst.close();				  
 			  }catch (Exception e) {
 				  System.out.print(e);
 				  

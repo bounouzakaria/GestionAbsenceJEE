@@ -34,8 +34,8 @@ public class Ajouter extends HttpServlet {
 		if(session.getAttribute("login")!=null){
 			String nom=request.getParameter("nom");
 			String prenom=request.getParameter("prenom");
-			String telephone=request.getParameter("telephone");
 			String email = request.getParameter("email");
+			String classe = request.getParameter("id_classe");
 			String pass = request.getParameter("pwd");
 			int user_id = 0;
 			
@@ -47,27 +47,21 @@ public class Ajouter extends HttpServlet {
 			  try {
 				  Class.forName("com.mysql.jdbc.Driver");
 				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-				  System.out.println(email + " " + pass);
 				  PreparedStatement pst = con.prepareStatement("insert into user(email_user, pass_user) values (?, ?)");
 				  pst.setString(1, email);
 				  pst.setString(2, pass);
 				  pst.executeUpdate();
 				  
-				  pst = con.prepareStatement("select Max(id_user) from user");
-				  ResultSet rs = pst.executeQuery();
-				  while(rs.next()) {
-					  user_id = rs.getInt(1);
-					  pst = con.prepareStatement("insert into professeur(nom_prof,prenom_prof,telephone_prof,user_id) values(?,?,?,?)");
-					  pst.setString(1, nom); 
-					  pst.setString(2, prenom);
-					  pst.setString(3, telephone); 
-					  pst.setInt(4, user_id);
-					  pst.executeUpdate();
-					  response.sendRedirect("index.jsp");
-					  pst.close();
-					  con.close();
-				  }
-				  
+				  pst = con.prepareStatement("insert into etudiant(prenom_etud,nom_etud,email_etud,id_classe) values(?,?,?,?)");
+				  pst.setString(1, prenom); 
+				  pst.setString(2, nom);
+				  pst.setString(3, email); 
+				  pst.setString(4,classe);
+				  pst.executeUpdate();
+				  response.sendRedirect("index.jsp");
+				  pst.close();
+				  con.close();
+			  
 			  }catch (Exception e) {
 				  System.out.print(e);
 				  
