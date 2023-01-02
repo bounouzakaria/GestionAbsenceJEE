@@ -1,5 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
  <%@ page language="java" %>
 <%@ page import = "java.sql. *"%>
 
@@ -20,73 +22,96 @@ if(session.getAttribute("login")!=null){
 
 </head>
 <body>
+<script type="text/javascript">
+	let v = 4;
+</script>
 <div>
-<p> Liste des Etudiants</p>
+<p> Liste d'absence</p>
 <a href="Logout">Logout</a>
 </div>
-<h1>Liste des Etudiants</h1>
+<h1>Liste d'absence</h1>
 <table border="1" width="100%" >
-       <tr> 
-       
-       <th> ID</th>
-        <th>Prenom </th>
-        <th>Nom </th>
-         <th>Classe</th>
-         <th>Email</th>
-         <th>Password</th>
-           <th>Action</th>
-           <th>Action2</th>
-       
-       </tr>
-       <%
-       String url = "jdbc:mysql://localhost:3306/gestionabsence";
+<tr><td>Selectionner Classe</td>
+       <form action="Classe">
+       <td>
+       	<select name="classe" onchange="{(e)=>v = e.target.value}">
+<%
+       String url = "jdbc:mysql://localhost:3306/gestionabsence?characterEncoding=utf8";
 		  String utilisateur = "root";
 		  String motDePasse = "";
 		  int number=0;
 		  try {
 			  Class.forName("com.mysql.jdbc.Driver");
 			  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-			  PreparedStatement pst = con.prepareStatement("select * from etudiant");
-			ResultSet rs=pst.executeQuery();
-			 while(rs.next()){
-				 PreparedStatement pst2 = con.prepareStatement("SELECT * from user where email_user=?");
-				 pst2.setString(1, rs.getString(4));
-				 ResultSet rs1 = pst2.executeQuery();
+			  PreparedStatement pst = con.prepareStatement("select id_classe, nom_classe from classe");
+			  ResultSet rs=pst.executeQuery();
+			  while(rs.next()){
+			%>
+			<option value="<%=rs.getString(1)%>"><%=rs.getString(2)%></option>
+		<%} %>
+       	</select>
+       </td>
+       <td><input type="submit" value="Chercher"/></td>
+       </form>
+       </tr>
+       <tr> 
+       <th>ID</th>
+        <th>Absence</th>
+        <th>Seance</th>
+        <th>Etudiant</th>
+        <th>Classe</th>
+       </tr>
+       <%	String v = (String) request.getAttribute("v");
+       		if(v != null){
+       			System.out.println(v);
+       		pst = con.prepareStatement("select * from absence");
+		   	rs=pst.executeQuery();
+		 	 while(rs.next()){
+		 		if(rs.getString(5).equals(v)){
+		 		 PreparedStatement rs2 = con.prepareStatement("select nom_classe from classe where id_classe= ?");
+		 		 rs2.setString(1, rs.getString(5));
+		 		 ResultSet r = rs2.executeQuery();
+		 		 while(r.next()){
 				 %>
 	<tr> 
 		<td><%=rs.getString(1)%></td>
-        <td><%=rs.getString(3)%></td>
         <td><%=rs.getString(2)%></td>
-        <%
-        	pst = con.prepareStatement("select nom_classe from classe where id_classe=?");
-        	pst.setString(1, rs.getString(5));
-        	ResultSet rs3= pst.executeQuery();
-        	while (rs3.next()){
-        %>
-        <td><%=rs3.getString(1) %></td>
-         <%
-        	}
-         while(rs1.next()){
-        	 %>
-		<td><%=rs1.getString(2)%></td>
-		<td><%=rs1.getString(3)%></td>  
-		<%      	 
-         }
-         %>
-         <!--  Voici l'erreur -->
-          <td> <a href="Delete?email_user=<%=rs.getString(4)%>">Supprimer</a></td>
-          <td> <a href="Update?id_etud=<%=rs.getString(1)%>&email_user=<%=rs.getString(4)%>">modifier</a></td>
-        		
+        <td><%=rs.getString(3)%></td>
+        <td><%=rs.getString(4)%></td>
+        <td><%=r.getString(1)%></td>
     </tr>	        		 
 		<%
-			 }
-			pst = con.prepareStatement("select count(*) from etudiant");
+		
+		 		 }
+       }
+		 	 }		 	
+       		}
+       		else {
+           		PreparedStatement pst3 = con.prepareStatement("select * from absence");
+    		   	ResultSet rs3=pst3.executeQuery();
+    		 	 while(rs3.next()){
+    		 		 PreparedStatement rs4= con.prepareStatement("select nom_classe from classe where id_classe= ?");
+    		 		 rs4.setString(1, rs3.getString(5));
+    		 		 ResultSet r5 = rs4.executeQuery();
+    		 		 while(r5.next()){
+    				 %>
+    	<tr> 
+    		<td><%=rs3.getString(1)%></td>
+            <td><%=rs3.getString(2)%></td>
+            <td><%=rs3.getString(3)%></td>
+            <td><%=rs3.getString(4)%></td>
+            <td><%=r5.getString(1)%></td>
+        </tr>
+        <%
+       } 
+       		}
+       		}
+			pst = con.prepareStatement("select count(*) from absence");
 			rs=pst.executeQuery();
 			rs.next();
 			
 			number=rs.getInt(1);
 			  rs.close();
-			  con.close();
 			  pst.close();
 			  
 		  }catch (Exception e) {
@@ -94,8 +119,8 @@ if(session.getAttribute("login")!=null){
 		  }
        %>
 </table>
-Nombre total de classes :<%=number %><br>
-<a href="Ajouter.jsp">Ajouter Classe</a>
+Nombre total d'absences:<%=number%><br>
+<a href="Ajouter.jsp">Ajouter Absence</a>
 
 
 </body>

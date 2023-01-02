@@ -2,9 +2,11 @@ package web;
 
 import java.io.IOException;
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,42 +16,37 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Delete
+ * Servlet implementation class FindClasse
  */
-@WebServlet("/Delete")
-public class Delete extends HttpServlet {
+@WebServlet("/Classe")
+public class FindClasse extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-  
-    public Delete() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public FindClasse() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    dbConnection con = new dbConnection();
-    Connection cnx = con.init();
-	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession();
-		if(session.getAttribute("login")!=null){
-			String id_classe = request.getParameter("id_classe");		
-			  try {
-				  PreparedStatement pst = cnx.prepareStatement("delete from classe where id_classe = ?");
-				  pst.setString(1, id_classe);
-				  response.sendRedirect("index.jsp");
-				  int rs = pst.executeUpdate();
-					  pst.close();
-				  
-			  }catch (Exception e) {
-				  System.out.print(e);
-				  
-			  }
-		}else{
-			response.sendRedirect("auth.jsp");
-					}
+		dbConnection db = new dbConnection();
+		Connection cnx = db.init();
+		String v = request.getParameter("classe");
+		String v1 = request.getParameter("id_classe");
+		if(v != null) {
+		request.setAttribute("v", v);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
+		}
+		else if (v1 != null) {
+			request.setAttribute("v", v1);
+			request.getRequestDispatcher("Ajouter.jsp").forward(request, response);	
+		}
 	}
-	
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

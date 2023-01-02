@@ -2,7 +2,7 @@ package web;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -28,41 +28,24 @@ public class Ajouter extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+    dbConnection con = new dbConnection();
+    Connection cnx = con.init();
 	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
-			String nom=request.getParameter("nom");
-			String prenom=request.getParameter("prenom");
-			String email = request.getParameter("email");
-			String classe = request.getParameter("id_classe");
-			String pass = request.getParameter("pwd");
-			int user_id = 0;
+			String id_filliere=request.getParameter("id_etudiant");
 			
-			
-			
-			  String url = "jdbc:mysql://localhost:3306/gestionabsence";
-			  String utilisateur = "root";
-			  String motDePasse = "";
 			  try {
-				  Class.forName("com.mysql.jdbc.Driver");
-				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-				  PreparedStatement pst = con.prepareStatement("insert into user(email_user, pass_user) values (?, ?)");
-				  pst.setString(1, email);
-				  pst.setString(2, pass);
-				  pst.executeUpdate();
-				  
-				  pst = con.prepareStatement("insert into etudiant(prenom_etud,nom_etud,email_etud,id_classe) values(?,?,?,?)");
-				  pst.setString(1, prenom); 
-				  pst.setString(2, nom);
-				  pst.setString(3, email); 
-				  pst.setString(4,classe);
-				  pst.executeUpdate();
-				  response.sendRedirect("index.jsp");
-				  pst.close();
-				  con.close();
-			  
-			  }catch (Exception e) {
+
+				  PreparedStatement pst = cnx.prepareStatement("insert into absence(nom_classe, filliere_id) values(?, ?)");
+					  pst.setString(2, id_filliere);
+					  pst.executeUpdate();
+					  response.sendRedirect("index.jsp");
+					  pst.close();
+			  	}
+			  catch (Exception e) {
 				  System.out.print(e);
 				  
 			  }

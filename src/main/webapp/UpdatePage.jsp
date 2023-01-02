@@ -15,28 +15,26 @@
 <body>
 
 <%
+	
 	dbConnection db = new dbConnection();
 	Connection cnx = db.init();
 	
 	List<String> rl = new ArrayList<String>();
 	
-	PreparedStatement pst = cnx.prepareStatement("select id_classe, nom_classe from classe");
+	PreparedStatement pst = cnx.prepareStatement("select id_filliere, libelle_fil from filliere");
 	ResultSet rs = pst.executeQuery();
-	
+
 
 
 %>
 
+
 <form action="Update" method="POST">
 <table>
-<td><input name="email1" readonly value="${email1}" type="hidden"></td>
-<tr><td>ID</td><td><input name="user_id" value="${id}" readonly/></td></tr>
+<tr><td>ID</td><td><input name="id_classe" value="${id_classe}" type="hidden" readonly/></td></tr>
 <tr><td>Nom</td><td><input type="text" name="nom" value="${nom}"/></td></tr>
-<tr><td>Prenom</td><td><input type="text" name="prenom" value="${prenom}"/></td></tr>
-<tr><td>Email</td><td><input type="text" name="email" value="${email}"/></td></tr>
-<tr><td>Mot de passe</td><td><input type="text" name="pass" value="${pass}"/></td></tr>
-<tr><td>Classe</td>
-<td><select name="id_classe">
+<tr><td>Filliere</td>
+<td><select name="id_filliere">
        <%
        while(rs.next()){
        %>
@@ -45,8 +43,7 @@
        }
        %>
        </select></td><tr>
-
-<tr><td><input type="Submit" value="Modifier"/></td></tr>
+       <td><input type="Submit" value="Modifier"/></td></tr>
 </table>
 </form>
 
