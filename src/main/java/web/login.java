@@ -43,7 +43,7 @@ public class login extends HttpServlet {
 			  ResultSet rs=pst.executeQuery();
 			  if(rs.next()) {
 				  session.setAttribute("login", login);
-				  response.sendRedirect("index.jsp");
+				  response.sendRedirect("choix.jsp");
 			  }else {
 				  response.sendRedirect("auth.jsp");
 			  }

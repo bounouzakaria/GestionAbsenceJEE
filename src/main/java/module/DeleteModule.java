@@ -28,12 +28,7 @@ public class DeleteModule extends HttpServlet {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
 		
-		String id = request.getParameter("id_semestre");
-		String id2 = request.getParameter("id_filliere");
-		String libelle=request.getParameter("libelle");
-		String filiere=request.getParameter("filiere");
-		String semestre = request.getParameter("semestre");
-		
+		String id = request.getParameter("fil_id");
 		String url = "jdbc:mysql://localhost:3306/gestionabsence";
 		  String utilisateur = "root";
 		  String motDePasse = "";
@@ -42,15 +37,9 @@ public class DeleteModule extends HttpServlet {
 			  Class.forName("com.mysql.jdbc.Driver");
 			  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
 
-	  PreparedStatement pst = con.prepareStatement("delete from module where sem_id = ? ");
+	  PreparedStatement pst = con.prepareStatement("delete from module where fil_id=?  ");
 	  pst.setString(1, id);
 	 pst.executeUpdate();
-	  pst = con.prepareStatement("delete from semestre where id_semestre = ?");
-	  pst.setString(1, id);
-	  pst.executeUpdate();
-	  pst = con.prepareStatement("delete from filliere where id_filliere = ?");
-	  pst.setString(1, id2);
-	  pst.executeUpdate();
 	  response.sendRedirect("index2.jsp");
 	  pst.close();
 	  con.close();

@@ -21,19 +21,17 @@ if(session.getAttribute("login")!=null){
 </head>
 <body>
 <div>
-<p> Liste des professeurs</p>
+<p> Emploi du temps</p>
 <a href="Logout">Logout</a>
 </div>
-<h1>Liste des Professeurs</h1>
+<h1>Emploi du temps</h1>
 <table border="1" width="100%" >
        <tr> 
        
        <th> ID</th>
-        <th> Nom </th>
-        <th>Prenom </th>
-         <th>Telephone</th>
-         <th>Email</th>
-         <th>Password</th>
+        <th> titre </th>
+           <th> Semestre </th>
+        
            <th>Action</th>
            <th>Action2</th>
        
@@ -46,37 +44,30 @@ if(session.getAttribute("login")!=null){
 		  try {
 			  Class.forName("com.mysql.jdbc.Driver");
 			  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-			  PreparedStatement pst = con.prepareStatement("select * from professeur");
+			  PreparedStatement pst = con.prepareStatement("select * from emploi_temps");
 			ResultSet rs=pst.executeQuery();
 			 while(rs.next()){
-				 PreparedStatement pst2 = con.prepareStatement("SELECT * from user where id_user=" + rs.getString(5));
+				 PreparedStatement pst2 = con.prepareStatement("SELECT * from semestre where id_semestre=" + rs.getString(3));
 				 ResultSet rs1 = pst2.executeQuery();
+
 				 %>
-	<tr> 
-		<td><%=rs.getString(1)%></td>
-        <td><%=rs.getString(2)%></td>
-        <td><%=rs.getString(3)%></t>
-         <td> <%=rs.getString(4)%></td>
+	
          <%
          while(rs1.next()){
         	 %>
-		<td><%=rs1.getString(2)%></td>
-		<td><%=rs1.getString(3)%></td>  
+	<tr>
+		<td><%=rs.getString(1) %></td>
+		<td><%=rs.getString(2)%></td>
+		<td><%=rs1.getString(2)%></td> 
+		<td><a href="DeleteEmp?id_semestre=<%=rs1.getString(1) %>">Supprimer</a></td>
+         <td><a href="UpdateEmp?id_emploi_temps=<%=rs1.getString(1) %>">modifier</a></td>
+   </tr>
 		<%      	 
-         }
-         %>
-          <td> <a href="Delete?user_id=<%=rs.getString(1) %>">Supprimer</a></td>
-          <td> <a href="Update?id_prof=<%=rs.getString(1) %>">modifier</a></td>
-        
-          
-          
-				
-    </tr>
-			        
-				 
-				 <%
+         } %>
+          	 
+		<%
 			 }
-			pst = con.prepareStatement("select count(*) from professeur");
+			pst = con.prepareStatement("select count(*) from emploi_temps");
 			rs=pst.executeQuery();
 			rs.next();
 			
@@ -95,8 +86,8 @@ if(session.getAttribute("login")!=null){
        %>
        
 </table>
-Nombre total de professeurs :<%=number %><br>
-<a href="Ajouter.jsp">Ajouter Professeur</a>
+Nombre total d'emploi du temps:<%=number %><br>
+<a href="AjouterEmp.jsp">Ajouter Emploi du temps</a>
 
 
 </body>

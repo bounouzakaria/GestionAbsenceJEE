@@ -18,42 +18,35 @@ int number=0;
 try {
 	  Class.forName("com.mysql.jdbc.Driver");
 	  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-	  PreparedStatement pst = con.prepareStatement("select id_filliere, libelle_fil from filliere");
+	  PreparedStatement pst = con.prepareStatement("select id_semestre, nom_semestre from semestre");
 	ResultSet rs=pst.executeQuery();
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title></title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
+<div>
+<a href="Logout">Logout</a>
+</div>
+<h1>Ajouter Emploi du temps</h1>
+<form method="POST" action="AjouterEmp" >
+<table border="1">
 
-<form action="UpdateModule" method="POST">
-<table>
 <tr>
-       <td>Libelle</td>
-       <td><input type="text" name="libelle" required></td>
+       <td>Titre</td>
+       <td><input type="year" id="id_t" name="titre"
+       value="2022"
+       min="2018" max="2030">
+</td>
 
 </tr>
-<tr>
-       <td>Nom_Filiere</td>
-       <td>
-       <select name="fil" id="id_fil" value="${libelle }/">
-       <%
-  	 while(rs.next()){
-		%>
-		  <option value="<%= rs.getString(1)%>"><%= rs.getString(2)%></option>
-		<%
-  	 }
-       %>
-		</select>
-       </td>
 
-</tr>
 <tr>
        <td>Nom_Semestre</td>
-       <td><select name="sem" id="id_sem">
+       <td><select name="sem" id="id_semestre">
        <%
        	pst = con.prepareStatement("select id_semestre, nom_semestre from semestre order by nom_semestre");
    		rs = pst.executeQuery();
@@ -71,7 +64,13 @@ try {
 
 </tr>
 
-<tr><td><input type="Submit" value="Modifier"/></td></tr>
+
+<tr>
+       <td>Envoyer</td>
+       <td><input type="submit" value="Enregistrer" required></td>
+        <td><input type="reset" value="Retablir" required></td>
+
+</tr>
 </table>
 </form>
 

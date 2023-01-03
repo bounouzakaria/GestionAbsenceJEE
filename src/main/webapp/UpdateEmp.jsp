@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page language="java" %>
 <%@ page import = "java.sql. *"%>
@@ -18,42 +18,25 @@ int number=0;
 try {
 	  Class.forName("com.mysql.jdbc.Driver");
 	  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-	  PreparedStatement pst = con.prepareStatement("select id_filliere, libelle_fil from filliere");
+	  PreparedStatement pst = con.prepareStatement("select id_semestre, nom_semestre from semestre");
 	ResultSet rs=pst.executeQuery();
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title></title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-
-<form action="UpdateModule" method="POST">
+<form action="UpdateEmp" method="POST">
 <table>
-<tr>
-       <td>Libelle</td>
-       <td><input type="text" name="libelle" required></td>
-
-</tr>
-<tr>
-       <td>Nom_Filiere</td>
-       <td>
-       <select name="fil" id="id_fil" value="${libelle }/">
-       <%
-  	 while(rs.next()){
-		%>
-		  <option value="<%= rs.getString(1)%>"><%= rs.getString(2)%></option>
-		<%
-  	 }
-       %>
-		</select>
-       </td>
-
-</tr>
+<tr><td>ID</td><td><input name="id_emploi_temps" value="${id_emploi_temps}" readonly/></td></tr>
+<tr><td>Titre</td><td><input type="year" id="id_t" name="titre" value="${titre}"
+       min="2018-01-01" max="2030-12-31">
+</td></tr>
 <tr>
        <td>Nom_Semestre</td>
-       <td><select name="sem" id="id_sem">
+       <td><select name="sem" id="id_semestre">
        <%
        	pst = con.prepareStatement("select id_semestre, nom_semestre from semestre order by nom_semestre");
    		rs = pst.executeQuery();

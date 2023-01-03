@@ -1,10 +1,9 @@
-package web;
+package Emploi_Temps;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,31 +12,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class Delete
- */
-@WebServlet("/Delete")
-public class Delete extends HttpServlet {
+@WebServlet("/DeleteEmp")
+public class DeleteEmp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-  
-    public Delete() {
+
+    public DeleteEmp() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
 		
-		String id = request.getParameter("user_id");
-		String nom=request.getParameter("nom");
-		String prenom=request.getParameter("prenom");
-		String mail=request.getParameter("email");
-		String password=request.getParameter("pass");
-		String telephone=request.getParameter("tel");
-
+		String id = request.getParameter("id_semestre");
+		String titre=request.getParameter("titre");
+		
 		String url = "jdbc:mysql://localhost:3306/gestionabsence";
 		  String utilisateur = "root";
 		  String motDePasse = "";
@@ -46,13 +38,10 @@ public class Delete extends HttpServlet {
 			  Class.forName("com.mysql.jdbc.Driver");
 			  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
 
-	  PreparedStatement pst = con.prepareStatement("delete from professeur where user_id = ?");
+	  PreparedStatement pst = con.prepareStatement("delete from emploi_temps where id_semestre= ?");
 	  pst.setString(1, id);
 	 pst.executeUpdate();
-	  pst = con.prepareStatement("delete from user where id_user = ?");
-	  pst.setString(1, id);
-	  pst.executeUpdate();
-	  response.sendRedirect("index.jsp");
+	  response.sendRedirect("index4.jsp");
 	  pst.close();
 	  con.close();
 		  }
@@ -61,16 +50,9 @@ public class Delete extends HttpServlet {
 	}
 			
 			
-		
 	}
-	
-	
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 
