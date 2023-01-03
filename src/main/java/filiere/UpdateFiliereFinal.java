@@ -15,10 +15,10 @@ import javax.servlet.http.HttpSession;
 
 
 @WebServlet("/UpdateFiliere")
-public class UpdateFiliere extends HttpServlet {
+public class UpdateFiliereFinal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public UpdateFiliere() {
+    public UpdateFiliereFinal() {
         super();
         
     }

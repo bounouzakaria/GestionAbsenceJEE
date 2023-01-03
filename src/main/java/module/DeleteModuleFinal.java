@@ -1,4 +1,4 @@
-package Emploi_Temps;
+package module;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/AjouterEmp")
-public class AjouterEmp extends HttpServlet {
+/**
+ * Servlet implementation class DeleteModule
+ */
+@WebServlet("/DeleteModule")
+public class DeleteModuleFinal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public AjouterEmp() {
+       
+    public DeleteModuleFinal() {
         super();
         
     }
@@ -24,41 +27,30 @@ public class AjouterEmp extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
-			
-		String titre = "";
-		String id_semestre = "";
 		
-		
-		  String url = "jdbc:mysql://localhost:3306/gestionabsence";
+		String id = request.getParameter("fil_id");
+		String url = "jdbc:mysql://localhost:3306/gestionabsence";
 		  String utilisateur = "root";
 		  String motDePasse = "";
+		
 		  try {
 			  Class.forName("com.mysql.jdbc.Driver");
 			  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-			  titre = request.getParameter("titre");
-			  id_semestre = request.getParameter("sem");
-				  PreparedStatement pst = con.prepareStatement("insert into emploi_temps(titre,id_semestre) values(?,?)");
-				  pst.setString(1, titre); 
-				  pst.setString(2, id_semestre);
-				  pst.executeUpdate();
-				  response.sendRedirect("index4.jsp");
-				  pst.close();
-				  con.close();
-				  
-		  }catch (Exception e) {
-			  System.out.print(e);
+
+	  PreparedStatement pst = con.prepareStatement("delete from module where fil_id=?  ");
+	  pst.setString(1, id);
+	 pst.executeUpdate();
+	  response.sendRedirect("index2.jsp");
+	  pst.close();
+	  con.close();
+		  }
+		  catch(Exception e) {
 		  }
 	}
-		  else{
-		response.sendRedirect("auth.jsp");
-				}
-
+	}
 
 	
-}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

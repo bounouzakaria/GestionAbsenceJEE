@@ -1,4 +1,4 @@
-package module;
+package filiere;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,60 +13,51 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-@WebServlet("/AjouterModule")
-public class AjouterModule extends HttpServlet {
+/**
+ * Servlet implementation class AjouterFiliere
+ */
+@WebServlet("/AjouterFiliere")
+public class AjouterFiliereFinal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-  
-    public AjouterModule() {
-       
+    public AjouterFiliereFinal() {
+        super();
     }
 
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
-			
-			String id_filliere = "";
-			String libelle = "";
-			String id_semestre = "";
-			
-			
-			  String url = "jdbc:mysql://localhost:3306/gestionabsence";
+			String filiere=request.getParameter("filiere");
+
+			String url = "jdbc:mysql://localhost:3306/gestionabsence";
 			  String utilisateur = "root";
 			  String motDePasse = "";
 			  try {
 				  Class.forName("com.mysql.jdbc.Driver");
 				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-				  libelle = request.getParameter("libelle");
-				  id_filliere = request.getParameter("fil");
-				  id_semestre = request.getParameter("sem");
-					  PreparedStatement pst = con.prepareStatement("insert into module(libelle,sem_id,fil_id) values(?,?,?)");
-					  pst.setString(1, libelle); 
-					  pst.setString(2, id_semestre);
-					  pst.setString(3, id_filliere);
-					  pst.executeUpdate();
-					  response.sendRedirect("index2.jsp");
+				  PreparedStatement pst = con.prepareStatement("insert into filliere(libelle_fil) values (?)");
+				  pst.setString(1,filiere);
+				  pst.executeUpdate();
+				  response.sendRedirect("index3.jsp");
 					  pst.close();
 					  con.close();
+				  }
 				  
-			  }catch (Exception e) {
+			  catch (Exception e) {
 				  System.out.print(e);
-			  }
+		}
 		}
 			  else{
 			response.sendRedirect("auth.jsp");
 					}
+}
 
-	
-		
-	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 		
+		doGet(request, response);
+	}
 
-}
 }

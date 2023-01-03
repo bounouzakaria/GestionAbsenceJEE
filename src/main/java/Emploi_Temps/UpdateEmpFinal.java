@@ -1,4 +1,4 @@
-package module;
+package Emploi_Temps;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,15 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/UpdateModule")
-public class UpdateModule extends HttpServlet {
+@WebServlet("/UpdateEmp")
+public class UpdateEmpFinal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
    
-    public UpdateModule() {
+    public UpdateEmpFinal() {
         super();
-       
+        // TODO Auto-generated constructor stub
     }
+
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
@@ -29,32 +31,20 @@ public class UpdateModule extends HttpServlet {
 			  String utilisateur = "root";
 			  String motDePasse = "";
 			  try {
-					String id = request.getParameter("id_module");
-					int id_1 = 0;
-					String libelle = null, filiere= null, semestre= null;
+					String id = request.getParameter("id_emploi_temps");
+					
+					String titre = null;
 				  Class.forName("com.mysql.jdbc.Driver");
 				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
-				PreparedStatement pst1 = con.prepareStatement("SELECT * FROM module where id_module=?");
+				PreparedStatement pst1 = con.prepareStatement("SELECT * FROM emploi_temps where id_emploi_temps=?");
 				pst1.setInt(1, Integer.parseInt(id));
 				ResultSet rs = pst1.executeQuery();				
 				while(rs.next()) {
-					libelle = rs.getString(2);
-					id_1 = rs.getInt(5);
-					pst1 = con.prepareStatement("SELECT * FROM module where fil_id =?");
-					pst1.setInt(1, id_1);
-					pst1 = con.prepareStatement("SELECT * FROM module where sem_id =?");
-					pst1.setInt(1, id_1);
-					ResultSet rs1 = pst1.executeQuery();
-					while(rs1.next()) {
-						filiere = rs.getString(2);
-						semestre = rs.getString(2);
-					}
+					titre = rs.getString(2);
 				}
-				request.setAttribute("id_1", id_1);
-				request.setAttribute("libelle", libelle);
-				request.setAttribute("filiere", filiere);
-				request.setAttribute("semestre",semestre);
-				request.getRequestDispatcher("UpdateMod.jsp").forward(request, response);
+				request.setAttribute("id_emploi_temps", id);
+				request.setAttribute("titre", titre);
+				request.getRequestDispatcher("UpdateEmp.jsp").forward(request, response);
 			  }catch (Exception e) {
 				  System.out.print(e);
 				  
@@ -69,12 +59,8 @@ public class UpdateModule extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				
-			String id = request.getParameter("id_module");
-			String libelle=request.getParameter("libelle");
-			String filiere=request.getParameter("filiere");
-			String semestre=request.getParameter("semestre");
-			
-
+			String id = request.getParameter("id_emploi_temps");
+			String titre=request.getParameter("titre");
 			String url = "jdbc:mysql://localhost:3306/gestionabsence";
 			  String utilisateur = "root";
 			  String motDePasse = "";
@@ -83,19 +69,15 @@ public class UpdateModule extends HttpServlet {
 				  Class.forName("com.mysql.jdbc.Driver");
 				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
 
-		  PreparedStatement pst = con.prepareStatement("UPDATE module SET libelle = ? ,  sem_id =?, fil_id=? where id_module = ?");
-		  pst.setString(1, libelle); 
-		  pst.setString(2, filiere); 
-		  pst.setString(3, semestre);
-		  pst.setString(4, id);
+		  PreparedStatement pst = con.prepareStatement("UPDATE emploi_temps SET titre = ? where id_emploi_temps=? ");
+		  pst.setString(1, titre); 
+		  pst.setString(2, id);
 		  pst.executeUpdate();
-		  response.sendRedirect("index2.jsp");
+		  response.sendRedirect("index4.jsp");
 		  pst.close();
-		 
 		  con.close();
 			  }
 			  catch(Exception e) {
 			  }
 		}
-
 }
