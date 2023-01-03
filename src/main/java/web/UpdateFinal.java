@@ -17,11 +17,11 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class Update
  */
 @WebServlet("/Update")
-public class Update extends HttpServlet {
+public class UpdateFinal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
   
-    public Update() {
+    public UpdateFinal() {
         super();
         // TODO Auto-generated constructor stub
     }

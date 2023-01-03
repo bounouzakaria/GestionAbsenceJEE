@@ -17,13 +17,13 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class Ajouter
  */
 @WebServlet("/Ajouter")
-public class Ajouter extends HttpServlet {
+public class AjouterFinal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Ajouter() {
+    public AjouterFinal() {
         super();
         // TODO Auto-generated constructor stub
     }

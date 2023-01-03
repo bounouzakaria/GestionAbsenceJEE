@@ -17,10 +17,10 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class login
  */
 @WebServlet("/login")
-public class login extends HttpServlet {
+public class loginFinal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
   
-    public login() {
+    public loginFinal() {
         super();
         // TODO Auto-generated constructor stub
     }

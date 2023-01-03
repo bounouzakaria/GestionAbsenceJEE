@@ -17,11 +17,11 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class Delete
  */
 @WebServlet("/Delete")
-public class Delete extends HttpServlet {
+public class DeleteFinal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
   
-    public Delete() {
+    public DeleteFinal() {
         super();
         // TODO Auto-generated constructor stub
     }
