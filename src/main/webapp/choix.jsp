@@ -20,7 +20,8 @@ if(session.getAttribute("login")!=null){
 <body>
 <a href="index.jsp">Page professeur</a><br>
 <a href="index2.jsp">Page module</a><br>
-<a href="index3.jsp">Page Filiere</a>
+<a href="index3.jsp">Page Filiere</a><br>
+<a href="IndexSeance.jsp">Page Seances</a>
 
 </body>
 </html>
