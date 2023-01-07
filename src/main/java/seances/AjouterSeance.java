@@ -27,8 +27,7 @@ public class AjouterSeance extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    dbConnection con = new dbConnection();
-    Connection cnx = con.init();
+    
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
