@@ -86,11 +86,14 @@ public class UpdateSeance extends HttpServlet {
 
 
 			
-
+		String url = "jdbc:mysql://localhost:3306/gestionabsence";
+		  String utilisateur = "root";
+		  String motDePasse = "";
 		  try {
 				 
-
-			  PreparedStatement pst = ((Connection) con).prepareStatement("delete from seance where id_seance = ? ");
+			  Class.forName("com.mysql.jdbc.Driver");
+			  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
+			  PreparedStatement pst = con.prepareStatement("delete from seance where id_seance = ? ");
 			  pst.setString(1, id_seance);
 			 pst.executeUpdate();
 			  pst = ((Connection) con).prepareStatement("delete from ensei where id_semestre = ?");
