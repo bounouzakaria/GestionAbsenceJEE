@@ -8,7 +8,7 @@ String login="";
 if(session.getAttribute("login")!=null){
 	login=session.getAttribute("login").toString();
 }else{
-	response.sendRedirect("auth.jsp");
+	response.sendRedirect("authFinal.jsp");
 			}
 %>
 <!DOCTYPE html>
@@ -87,7 +87,7 @@ if(session.getAttribute("login")!=null){
        %>
 </table>
 Nombre total de professeurs :<%=number %><br>
-<a href="Ajouter.jsp">Ajouter Professeur</a>
+<a href="AjouterFinal.jsp">Ajouter Professeur</a>
 
 
 </body>

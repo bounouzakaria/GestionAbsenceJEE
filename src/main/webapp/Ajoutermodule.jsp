@@ -7,7 +7,7 @@ String login="";
 if(session.getAttribute("login")!=null){
 	login=session.getAttribute("login").toString();
 }else{
-	response.sendRedirect("auth.jsp");
+	response.sendRedirect("authFinal.jsp");
 			}
 %>
 <!DOCTYPE html>

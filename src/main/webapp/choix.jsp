@@ -8,7 +8,7 @@ String login="";
 if(session.getAttribute("login")!=null){
 	login=session.getAttribute("login").toString();
 }else{
-	response.sendRedirect("auth.jsp");
+	response.sendRedirect("authFinal.jsp");
 			}
 %>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ if(session.getAttribute("login")!=null){
 <title>Insert title here</title>
 </head>
 <body>
-<a href="index.jsp">Page professeur</a><br>
+<a href="indexFinal.jsp">Page professeur</a><br>
 <a href="index2.jsp">Page module</a><br>
 <a href="index3.jsp">Page Filiere</a><br>
 <a href="IndexSeance.jsp">Page Seances</a>
