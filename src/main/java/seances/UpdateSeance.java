@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import classes.dbConnection;
+
 @WebServlet("/UpdateSeance")
 public class UpdateSeance extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,16 +25,15 @@ public class UpdateSeance extends HttpServlet {
         super();
 
     }
+    dbConnection con = new dbConnection();
+    Connection cnx = con.init();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
-			String url = "jdbc:mysql://localhost:3306/gestionabsence";
-			  String utilisateur = "root";
-			  String motDePasse = "";
+			
 			 
 			  try {
-				  Class.forName("com.mysql.jdbc.Driver");
-				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
+				
 				  String id_seance = request.getParameter("id_seance");
 					int enseignement_id = 0;
 					

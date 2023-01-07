@@ -1,8 +1,11 @@
-package web;
+
+
+
+
+package seances;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -16,11 +19,11 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class login
  */
-@WebServlet("/login")
-public class loginFinal extends HttpServlet {
+@WebServlet("/LoginSeance")
+public class loginSeance extends HttpServlet {
 	private static final long serialVersionUID = 1L;
   
-    public loginFinal() {
+    public loginSeance() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,10 +43,10 @@ public class loginFinal extends HttpServlet {
 			  
 			  ResultSet rs=pst.executeQuery();
 			  if(rs.next()) {
-				  session.setAttribute("login", login);
-				  response.sendRedirect("index.jsp");
+				  session.setAttribute("LoginSeance", login);
+				  response.sendRedirect("IndexSeance.jsp");
 			  }else {
-				  response.sendRedirect("auth.jsp");
+				  response.sendRedirect("Authentification.jsp");
 			  }
 			  rs.close();
 			  con.close();
@@ -66,3 +69,4 @@ public class loginFinal extends HttpServlet {
 	}
 
 }
+

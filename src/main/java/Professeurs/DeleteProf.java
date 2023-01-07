@@ -1,4 +1,4 @@
-package web;
+package Professeurs;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,11 +17,11 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class Delete
  */
 @WebServlet("/Delete")
-public class DeleteFinal extends HttpServlet {
+public class DeleteProf extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
   
-    public DeleteFinal() {
+    public DeleteProf() {
         super();
         // TODO Auto-generated constructor stub
     }

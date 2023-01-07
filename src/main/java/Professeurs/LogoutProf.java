@@ -1,4 +1,4 @@
-package web;
+package Professeurs;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -12,10 +12,10 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class Logout
  */
 @WebServlet("/Logout")
-public class LogoutFinal extends HttpServlet {
+public class LogoutProf extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-    public LogoutFinal() {
+    public LogoutProf() {
         super();
         // TODO Auto-generated constructor stub
     }

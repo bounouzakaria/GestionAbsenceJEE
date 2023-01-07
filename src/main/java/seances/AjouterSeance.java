@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import classes.dbConnection;
+
 /**
  * Servlet implementation class Ajouter
  */
@@ -28,7 +30,8 @@ public class AjouterSeance extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-	
+    dbConnection con = new dbConnection();
+    Connection cnx = con.init();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("LoginSeance")!=null){
@@ -41,12 +44,9 @@ public class AjouterSeance extends HttpServlet {
 			
 
 
-			String url = "jdbc:mysql://localhost:3306/gestionabsence";
-			  String utilisateur = "root";
-			  String motDePasse = "";
+		
 			  try {
-				  Class.forName("com.mysql.jdbc.Driver");
-				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
+			
 				  date_seance = request.getParameter("date_seance");
 				  type = request.getParameter("type");
 				  horaire_deb = request.getParameter("horaire_deb");

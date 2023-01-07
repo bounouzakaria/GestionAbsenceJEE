@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import classes.dbConnection;
+
 /**
  * Servlet implementation class DeleteModule
  */
@@ -25,7 +27,8 @@ public class DeleteSeance extends HttpServlet {
         super();
 
     }
-    
+    dbConnection con = new dbConnection();
+    Connection cnx = con.init();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
@@ -38,13 +41,10 @@ public class DeleteSeance extends HttpServlet {
 			String enseignement_id = request.getParameter("enseignement_id");
 
 
-			String url = "jdbc:mysql://localhost:3306/gestionabsence";
-			  String utilisateur = "root";
-			  String motDePasse = "";
+		
 
 		  try {
-			  Class.forName("com.mysql.jdbc.Driver");
-			  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
+			  
 
 	  PreparedStatement pst = ((Connection) con).prepareStatement("delete from seance where id_seance = ? ");
 	  pst.setString(1, id_seance);

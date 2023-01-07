@@ -1,4 +1,4 @@
-package web;
+package Professeurs;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,11 +17,11 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class Update
  */
 @WebServlet("/Update")
-public class UpdateFinal extends HttpServlet {
+public class UpdateProf extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
   
-    public UpdateFinal() {
+    public UpdateProf() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -1,6 +1,6 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="web.dbConnection"%>
+<%@page import="Professeurs.dbConnection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page language="java" %>
@@ -10,7 +10,7 @@ String login="";
 if(session.getAttribute("login")!=null){
 	login=session.getAttribute("login").toString();
 }else{
-	response.sendRedirect("auth.jsp");
+	response.sendRedirect("authFinal.jsp");
 			}
 
 	dbConnection db = new dbConnection();
