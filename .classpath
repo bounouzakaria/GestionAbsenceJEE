@@ -13,9 +13,16 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+<<<<<<< HEAD
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.servlet.jsp.jstl-api-1.2.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/mysql-connector-java-5.1-bin.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/taglibs-standard-impl-1.2.5 (1).jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Ahmed/Downloads/com.mysql.jdbc_5.1.5.jar"/>
+=======
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.servlet.jsp.jstl-api-1.2.7.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mysql-connector-java-5.1-bin.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/taglibs-standard-impl-1.2.5 (1).jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ahmed/Downloads/com.mysql.jdbc_5.1.5.jar"/>
+>>>>>>> crud-Prof
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

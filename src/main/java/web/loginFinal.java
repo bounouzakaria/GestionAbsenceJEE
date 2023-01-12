@@ -41,18 +41,18 @@ public class loginFinal extends HttpServlet {
 			  ResultSet rs=pst.executeQuery();
 			  if(rs.next()) {
 				  session.setAttribute("login", login);
+<<<<<<< HEAD
 <<<<<<< HEAD:src/main/java/web/loginFinal.java
 				  response.sendRedirect("choix.jsp");
 =======
 				  response.sendRedirect("Index.jsp");
 >>>>>>> crud-module:src/main/java/web/login.java
+=======
+				  response.sendRedirect("indexFinal.jsp");
+>>>>>>> crud-Prof
 			  }else {
-				  response.sendRedirect("auth.jsp");
+				  response.sendRedirect("authFinal.jsp");
 			  }
-			  rs.close();
-			  con.close();
-			  pst.close();
-			  
 			  
 			  
 		  }catch (Exception e) {

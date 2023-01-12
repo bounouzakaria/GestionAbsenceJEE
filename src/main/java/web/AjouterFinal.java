@@ -61,9 +61,13 @@ public class AjouterFinal extends HttpServlet {
 					  pst.setString(3, telephone); 
 					  pst.setInt(4, user_id);
 					  pst.executeUpdate();
+<<<<<<< HEAD
 					  response.sendRedirect("index.jsp");
 					  pst.close();
 					  cnx.close();
+=======
+					  response.sendRedirect("indexFinal.jsp");
+>>>>>>> crud-Prof
 				  }
 				  
 			  }catch (Exception e) {
@@ -74,7 +78,7 @@ public class AjouterFinal extends HttpServlet {
 			
 			
 		}else{
-			response.sendRedirect("auth.jsp");
+			response.sendRedirect("authFinal.jsp");
 					}
 	
 	}

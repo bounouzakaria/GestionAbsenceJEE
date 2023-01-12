@@ -59,13 +59,13 @@ public class UpdateFinal extends HttpServlet {
 				request.setAttribute("tel", tel);
 				request.setAttribute("email", email);
 				request.setAttribute("pass", email);
-				request.getRequestDispatcher("UpdatePage.jsp").forward(request, response);
+				request.getRequestDispatcher("UpdatePageFinal.jsp").forward(request, response);
 			  }catch (Exception e) {
 				  System.out.print(e);
 				  
 			  }
 		}else{
-			response.sendRedirect("auth.jsp");
+			response.sendRedirect("authFinal.jsp");
 					}
 	
 	}
@@ -97,9 +97,7 @@ public class UpdateFinal extends HttpServlet {
 		  pst.setString(2, password);
 		  pst.setString(3, id);
 		  pst.executeUpdate();
-		  response.sendRedirect("index.jsp");
-		  pst.close();
-		  con.close();
+		  response.sendRedirect("indexFinal.jsp");
 			  }
 			  catch(Exception e) {
 			  }
