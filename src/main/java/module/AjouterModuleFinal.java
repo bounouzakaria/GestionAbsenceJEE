@@ -23,7 +23,12 @@ public class AjouterModuleFinal extends HttpServlet {
        
     }
 
+<<<<<<< HEAD:src/main/java/module/AjouterModuleFinal.java
 
+=======
+    dbConnection cnx = new dbConnection();
+    Connection con = cnx.init();
+>>>>>>> crud-module:src/main/java/web/Delete.java
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		if(session.getAttribute("login")!=null){
@@ -33,10 +38,9 @@ public class AjouterModuleFinal extends HttpServlet {
 			String id_semestre = "";
 			
 			
-			  String url = "jdbc:mysql://localhost:3306/gestionabsence";
-			  String utilisateur = "root";
-			  String motDePasse = "";
+			
 			  try {
+<<<<<<< HEAD:src/main/java/module/AjouterModuleFinal.java
 				  Class.forName("com.mysql.jdbc.Driver");
 				  Connection con = DriverManager.getConnection( url, utilisateur, motDePasse );
 				  libelle = request.getParameter("libelle");
@@ -46,6 +50,20 @@ public class AjouterModuleFinal extends HttpServlet {
 					  pst.setString(1, libelle); 
 					  pst.setString(2, id_semestre);
 					  pst.setString(3, id_filliere);
+=======
+				  
+				  PreparedStatement pst = con.prepareStatement("delete from professeur where user_id = ?");
+				  pst.setString(1, user_id);
+				  response.sendRedirect("index.jsp");
+				  pst = con.prepareStatement("select Max(id_user) from user");
+				  ResultSet rs = pst.executeQuery();
+				  
+				  while(rs.next()) {
+
+					  
+					  pst = con.prepareStatement("delete from professeur where user_id=?");
+					  pst.setString(1, user_id);
+>>>>>>> crud-module:src/main/java/web/Delete.java
 					  pst.executeUpdate();
 					  response.sendRedirect("index2.jsp");
 					  pst.close();

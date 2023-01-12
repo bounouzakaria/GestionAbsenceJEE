@@ -1,4 +1,8 @@
-package web;
+
+
+
+
+package seances;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,18 +17,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import web.dbConnection;
+
 /**
  * Servlet implementation class login
  */
-@WebServlet("/login")
-public class loginFinal extends HttpServlet {
+@WebServlet("/LoginSeance")
+public class LoginSeance extends HttpServlet {
 	private static final long serialVersionUID = 1L;
   
-    public loginFinal() {
+    public LoginSeance() {
         super();
         // TODO Auto-generated constructor stub
     }
-    dbConnection cnx = new dbConnection();
+    ConnectionDB cnx = new ConnectionDB();
     Connection con = cnx.init();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
@@ -40,14 +46,10 @@ public class loginFinal extends HttpServlet {
 			  
 			  ResultSet rs=pst.executeQuery();
 			  if(rs.next()) {
-				  session.setAttribute("login", login);
-<<<<<<< HEAD:src/main/java/web/loginFinal.java
-				  response.sendRedirect("choix.jsp");
-=======
-				  response.sendRedirect("Index.jsp");
->>>>>>> crud-module:src/main/java/web/login.java
+				  session.setAttribute("LoginSeance", login);
+				  response.sendRedirect("IndexSeance.jsp");
 			  }else {
-				  response.sendRedirect("auth.jsp");
+				  response.sendRedirect("Authentification.jsp");
 			  }
 			  rs.close();
 			  con.close();
@@ -70,3 +72,4 @@ public class loginFinal extends HttpServlet {
 	}
 
 }
+
