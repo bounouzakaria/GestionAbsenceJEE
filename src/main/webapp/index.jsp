@@ -60,10 +60,23 @@ if(session.getAttribute("login")!=null){
 		<%      	 
          }
          %>
+<<<<<<< HEAD
           <td> <a href="Delete?id_classe=<%=rs.getString(1)%>">Supprimer</a></td>
           <td> <a href="Update?id_classe=<%=rs.getString(1)%>">modifier</a></td>
     </tr>	        		 
 		<%
+=======
+          <td> <a href="Delete?user_id=<%=rs.getString(1) %>">Supprimer</a></td>
+          <td> <a href="Update?id_prof=<%=rs.getString(1) %>">modifier</a></td>
+        
+          
+          
+				
+    </tr>
+			        
+				 
+				 <%
+>>>>>>> 30431efdcab9730e051cc63e3ecf580041621958
 			 }
 			pst = con.prepareStatement("select count(*) from classe");
 			rs=pst.executeQuery();
@@ -73,10 +86,15 @@ if(session.getAttribute("login")!=null){
 			  rs.close();
 			  pst.close();
 			  
+			  		  
 		  }catch (Exception e) {
 			  System.out.print(e);
+			  
 		  }
+		
+		
        %>
+       
 </table>
 Nombre total de classes :<%=number %><br>
 <a href="Ajouter.jsp">Ajouter Classe</a>
